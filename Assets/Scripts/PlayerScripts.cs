@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScripts : MonoBehaviour {
 
@@ -8,6 +9,10 @@ public class PlayerScripts : MonoBehaviour {
 	public GameObject smapho;
 	public float rotateSpeed;
 	public float ySpeed;
+
+	public Text ScoreText;
+	public float scoreSpeed = 1.0f;
+	public float score = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -29,22 +34,28 @@ public class PlayerScripts : MonoBehaviour {
 			}
 		}
 
-		//smartphone
-		if (Input.GetKey(KeyCode.Space) == true){
-			if (smapho.transform.rotation.x < 0.0f) {
-				smapho.transform.rotation = Quaternion.Euler ( smapho.transform.rotation.x + Time.deltaTime * rotateSpeed, smapho.transform.rotation.y, smapho.transform.rotation.z);
+		//float Xaxis = smapho.transform.rotation.eulerAngles.x;
+
+		//smartphone-----------
+		if (Input.GetKey (KeyCode.Space) == true) {
+			if (smapho.transform.rotation.eulerAngles.x >= 5.0f) {
+				smapho.transform.Rotate (-rotateSpeed, 0.0f, 0.0f);
+				//score UI
+				score += Time.deltaTime * scoreSpeed;
 			}
-			if(smapho.transform.position.y <0.4f){
-					smapho.transform.position += new Vector3 (0.0f,ySpeed, 1.523236e-10f);
+		} else if (Input.GetKey (KeyCode.Space) == false) {
+			if (smapho.transform.rotation.eulerAngles.x <= 35.0f) {
+				smapho.transform.Rotate (rotateSpeed, 0.0f, 0.0f);
 			}
-		} else if(Input.GetKey(KeyCode.Space) == false){
-			if (smapho.transform.rotation.x >= -90.0f) {
-				smapho.transform.rotation = Quaternion.Euler ( smapho.transform.rotation.x - Time.deltaTime * rotateSpeed, smapho.transform.rotation.y, smapho.transform.rotation.z);
-			}
-			if(smapho.transform.position.y >0.0f){
-					smapho.transform.position += new Vector3 (0.0f,-ySpeed, 0.0f);
-			}		
 		}
+			
+		//score UI
+		ScoreText.text = "罪"+ score.ToString ("F2") + "point";
+
+	}
+
+	void OnTriggerEnter(Collider collider){
+		// GameOverText = true;
 	}
 
 }
