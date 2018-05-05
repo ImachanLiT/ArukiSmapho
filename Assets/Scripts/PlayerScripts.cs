@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.IO;
+using System.Text;
 
 public class PlayerScripts : MonoBehaviour {
 
@@ -12,11 +15,21 @@ public class PlayerScripts : MonoBehaviour {
 
 	public Text ScoreText;
 	public float scoreSpeed = 1.0f;
-	public float score = 0.0f;
+	private float scoreTimer = 0.0f;
+	public float score;
+	public GameObject level2Object;
 
 	// Use this for initialization
 	void Start () {
-		
+		score = PlayerPrefs.GetFloat ("point");
+		if (PlayerPrefs.GetInt ("level") == 1) {
+			level2Object.gameObject.SetActive (false);
+		}
+		if (PlayerPrefs.GetInt ("level") == 2) {
+			scoreSpeed = 0.1f;
+		} else if (PlayerPrefs.GetInt ("level") >= 3) {
+			scoreSpeed = 0.5f;
+		}
 	}
 	
 	// Update is called once per frame
@@ -40,22 +53,35 @@ public class PlayerScripts : MonoBehaviour {
 		if (Input.GetKey (KeyCode.Space) == true) {
 			if (smapho.transform.rotation.eulerAngles.x >= 5.0f) {
 				smapho.transform.Rotate (-rotateSpeed, 0.0f, 0.0f);
-				//score UI
-				score += Time.deltaTime * scoreSpeed;
+
 			}
 		} else if (Input.GetKey (KeyCode.Space) == false) {
+			
+			scoreTimer = 0.0f;
 			if (smapho.transform.rotation.eulerAngles.x <= 35.0f) {
 				smapho.transform.Rotate (rotateSpeed, 0.0f, 0.0f);
 			}
 		}
 			
 		//score UI
-		ScoreText.text = "罪"+ score.ToString ("F2") + "point";
+		if (smapho.transform.rotation.eulerAngles.x <= 5.0f) {
+			scoreTimer += Time.deltaTime;
+			score += scoreTimer*scoreTimer * scoreSpeed;
+			ScoreText.text = "罪" + score.ToString ("F2") + "point";
+			PlayerPrefs.SetFloat ("point",score);
+		}
+	}
+
+	void OnTriggerEnter(Collider other){
+
+		PlayerPrefs.SetFloat ("point",score);
+		SceneManager.LoadScene ("GameOver");
+
 
 	}
 
-	void OnTriggerEnter(Collider collider){
-		// GameOverText = true;
-	}
+
 
 }
+
+
