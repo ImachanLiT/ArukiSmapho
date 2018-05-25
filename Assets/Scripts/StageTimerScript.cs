@@ -13,6 +13,9 @@ public class StageTimerScript : MonoBehaviour {
 		stageTime = stageTimer;
 		levelLabel.gameObject.SetActive (true);
 		levelLabel.text = "Level " + PlayerPrefs.GetInt ("level");
+		if (PlayerPrefs.GetInt ("level") == 3) {
+			levelLabel.text += " \nFinal Stage";
+		}
 	}
 
 	void Update () {

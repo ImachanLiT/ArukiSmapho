@@ -8,7 +8,8 @@ public class StartGameScript : MonoBehaviour {
 	private float timer1 = 0.0f;
 	private float timer2 = 0.0f;
 	private bool nextGame = false;
-	public GameObject text1,text2 ,Title, TitleBoard;
+	public GameObject text1,text2 ,Title, TitleBoard, RuleText;
+	public new AudioSource koukaon;
 
 	void Start () {
 		text1.gameObject.SetActive (false);
@@ -29,9 +30,11 @@ public class StartGameScript : MonoBehaviour {
 		}
 
 		if (Input.GetKey (KeyCode.Space)) {
+			koukaon.Play ();
 			text2.gameObject.SetActive (false);
 			Title.gameObject.SetActive (false);
 			TitleBoard.gameObject.SetActive (false);
+			RuleText.gameObject.SetActive (false);
 			nextGame = true;
 		}
 

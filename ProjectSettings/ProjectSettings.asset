@@ -630,11 +630,13 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
+    Build: 1
+    Collab: 1
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: 2abe8278-2ded-4f5c-bf7e-1019397864cf
-  projectName: ArukiSmapho
+  cloudProjectId: 7fae8489-cae6-4bfe-9fba-343a0fc1e873
+  projectName: ArukiSmapho (1)
   organizationId: yuya0501rin
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0

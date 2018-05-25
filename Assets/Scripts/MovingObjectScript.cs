@@ -20,9 +20,9 @@ public class MovingObjectScript : MonoBehaviour {
 	{	
 
 		movings.transform.position += this.transform.forward * speed;
-		if (movings.transform.position.x <= -1.8f) {
+		if (movings.transform.position.x <= -2.0f && angulV != 0.0f) {
 			movings.transform.rotation = Quaternion.Euler (0.0f,-angulV, 0.0f);
-		} else if(movings.transform.position.x >= 1.8f){
+		} else if(movings.transform.position.x >= 2.0f && angulV != 0.0f){
 			movings.transform.rotation = Quaternion.Euler (0.0f, angulV, 0.0f);
 		}
 

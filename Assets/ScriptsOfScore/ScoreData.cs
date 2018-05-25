@@ -37,8 +37,6 @@ public class ScoreData : MonoBehaviour {
 		Text2score.gameObject.SetActive (false);
 		Text3score.gameObject.SetActive (false);
 		Text4.gameObject.SetActive (false);
-
-		PlayerPrefs.SetInt ("level",1);
 			
 	}
 
@@ -49,7 +47,7 @@ public class ScoreData : MonoBehaviour {
 	void Update () {
 		timer += Time.deltaTime;
 
-		if (timer >= 1.0f) {
+		if (timer >= 1.0f && PlayerPrefs.GetInt("level") != 4) {
 			Text1.gameObject.SetActive(true);
 		}
 		if (timer >= 2.0f) {
@@ -67,6 +65,7 @@ public class ScoreData : MonoBehaviour {
 		}
 		if (next == true && Input.GetKey( KeyCode.Space)) {
 			PlayerPrefs.SetFloat ("point",0.0f);
+			PlayerPrefs.SetInt ("level",1);
 			SceneManager.LoadScene ("MainGame");
 
 		}

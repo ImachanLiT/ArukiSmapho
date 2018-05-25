@@ -18,18 +18,30 @@ public class PlayerScripts : MonoBehaviour {
 	private float scoreTimer = 0.0f;
 	public float score;
 	public GameObject level2Object;
+	//audio
+	public new AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
 		score = PlayerPrefs.GetFloat ("point");
 		if (PlayerPrefs.GetInt ("level") == 1) {
 			level2Object.gameObject.SetActive (false);
+			audio.pitch = 1.0f;
 		}
 		if (PlayerPrefs.GetInt ("level") == 2) {
-			scoreSpeed = 0.1f;
+			scoreSpeed = scoreSpeed * 4.0f;
+			audio.pitch = 1.05f;
 		} else if (PlayerPrefs.GetInt ("level") >= 3) {
-			scoreSpeed = 0.5f;
+			scoreSpeed = scoreSpeed * 12.0f;
+			audio.pitch = 1.1f;
 		}
+
+		//ScoreReset--------------------
+		/*PlayerPrefs.SetFloat("highScore",0.0f);
+		PlayerPrefs.SetFloat ("highScore2",0.0f);
+		PlayerPrefs.SetFloat ("highScore3",0.0f);
+		*/
+
 	}
 	
 	// Update is called once per frame
@@ -49,17 +61,18 @@ public class PlayerScripts : MonoBehaviour {
 
 		//float Xaxis = smapho.transform.rotation.eulerAngles.x;
 
-		//smartphone-----------
+		//smartphone-----------+audio+scoreRate
 		if (Input.GetKey (KeyCode.Space) == true) {
 			if (smapho.transform.rotation.eulerAngles.x >= 5.0f) {
 				smapho.transform.Rotate (-rotateSpeed, 0.0f, 0.0f);
-
+				audio.volume = 0.7f;
 			}
 		} else if (Input.GetKey (KeyCode.Space) == false) {
 			
 			scoreTimer = 0.0f;
 			if (smapho.transform.rotation.eulerAngles.x <= 35.0f) {
 				smapho.transform.Rotate (rotateSpeed, 0.0f, 0.0f);
+				audio.volume = 1.5f;
 			}
 		}
 			
@@ -69,6 +82,7 @@ public class PlayerScripts : MonoBehaviour {
 			score += scoreTimer*scoreTimer * scoreSpeed;
 			ScoreText.text = "罪" + score.ToString ("F2") + "point";
 			PlayerPrefs.SetFloat ("point",score);
+			audio.volume = 0.7f - 0.08f * (int)scoreTimer;
 		}
 	}
 
